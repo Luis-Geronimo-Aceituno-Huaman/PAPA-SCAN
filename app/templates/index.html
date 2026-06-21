@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PapaScan — Diagnóstico inteligente de papa</title>
+  <link rel="stylesheet" href="/static/css/styles.css?v=4" />
+</head>
+<body>
+
+  <!-- ===================== LOGIN ===================== -->
+  <div id="login-view" class="login-view">
+    <div class="login-card">
+      <div class="login-brand">
+        <h1>PapaScan</h1>
+        <p>Diagnóstico inteligente · procesamiento local</p>
+      </div>
+      <div class="login-tabs">
+        <button class="tab active" data-tab="login">Ingresar</button>
+        <button class="tab" data-tab="register">Crear cuenta</button>
+      </div>
+      <form id="auth-form" class="login-form">
+        <label>Usuario<input type="text" id="auth-username" autocomplete="username" required /></label>
+        <label>Contraseña<input type="password" id="auth-password" autocomplete="current-password" required /></label>
+        <label id="fullname-field" class="hidden">Nombre completo<input type="text" id="auth-fullname" /></label>
+        <div id="role-field" class="hidden">
+          <span class="role-label">Rol</span>
+          <div class="role-options">
+            <label class="radio"><input type="radio" name="role" value="agricultor" checked /> Agricultor</label>
+            <label class="radio"><input type="radio" name="role" value="tecnico" /> Técnico</label>
+          </div>
+        </div>
+        <button type="submit" class="btn-primary" id="auth-submit">Ingresar</button>
+        <p id="auth-error" class="auth-error"></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===================== APP ===================== -->
+  <div id="app-view" class="app hidden">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="brand">
+        <h1>PapaScan</h1>
+        <span>Diagnóstico inteligente</span>
+      </div>
+      <nav class="nav">
+        <a class="nav-item" data-section="captura"><span class="dot"></span> Nuevo análisis</a>
+        <a class="nav-item" data-section="asistente"><span class="dot"></span> Asistente</a>
+        <a class="nav-item" data-section="historial"><span class="dot"></span> Historial</a>
+      </nav>
+      <div class="sidebar-footer">
+        <span id="user-label"></span>
+        <a id="logout" class="logout">Cerrar sesión</a>
+        <span class="version">v1.0 · Procesamiento local</span>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <div class="main">
+      <header class="topbar">
+        <button id="menu-toggle" class="menu-toggle">☰</button>
+        <div class="address">● papascan.local · Red local (LAN)</div>
+        <div class="net-badge">● Sin Internet · LAN</div>
+      </header>
+
+      <main class="content">
+
+        <!-- ---------- CAPTURA / NUEVO ANÁLISIS ---------- -->
+        <section id="captura" class="section">
+          <h2 class="section-title">Nuevo análisis</h2>
+          <p class="section-sub">Sube una foto de la hoja de papa para analizarla localmente</p>
+
+          <div class="grid-2">
+            <!-- Subida de imagen -->
+            <div class="panel">
+              <div id="dropzone" class="dropzone">
+                <input type="file" id="file-input" accept="image/*" hidden />
+                <div class="dropzone-inner">
+                  <div class="dz-icon">🌿</div>
+                  <p><strong>Arrastra una imagen</strong> o haz clic para seleccionar</p>
+                  <p class="muted">JPG o PNG · hoja bien encuadrada y enfocada</p>
+                </div>
+              </div>
+              <div id="preview-wrap" class="preview-wrap hidden">
+                <img id="preview-img" alt="Vista previa" />
+                <div class="capture-actions">
+                  <button id="btn-clear" class="btn-secondary">Quitar</button>
+                  <button id="btn-analyze" class="btn-primary">Analizar hoja →</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Cómo funciona + consejos -->
+            <div class="info-stack">
+              <div class="panel info-panel">
+                <h3 class="panel-title">Cómo funciona</h3>
+                <p class="muted">PapaScan analiza la foto con una red neuronal (CNN) y resalta con
+                  <strong>Grad-CAM</strong> las zonas en las que se fijó para decidir. Todo el
+                  procesamiento es <strong>100 % local y sin Internet</strong>: tus imágenes no salen del equipo.</p>
+                <p class="muted">Distingue tres estados de la hoja:</p>
+                <div class="chips">
+                  <span class="chip ok">Sana</span>
+                  <span class="chip warn">Tizón temprano</span>
+                  <span class="chip danger">Tizón tardío</span>
+                </div>
+              </div>
+              <div class="panel info-panel">
+                <h3 class="panel-title">Consejos para una buena foto</h3>
+                <ul class="tips">
+                  <li>Una <strong>sola hoja</strong>, centrada y enfocada.</li>
+                  <li>Buena <strong>luz natural</strong>, sin sombras fuertes ni reflejos.</li>
+                  <li>Fondo <strong>simple</strong> (suelo, mano, papel).</li>
+                  <li>Evita fotos borrosas o tomadas de muy lejos.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Fichas educativas de enfermedades -->
+          <h3 class="block-title">Qué puede detectar</h3>
+          <div class="grid-3 disease-cards">
+            <div class="panel disease ok">
+              <h4>🟢 Hoja sana</h4>
+              <p class="muted">Follaje verde uniforme, sin manchas, lesiones ni amarillamiento anómalo.</p>
+            </div>
+            <div class="panel disease warn">
+              <h4>🟠 Tizón temprano</h4>
+              <p class="sci">Alternaria solani</p>
+              <p class="muted">Manchas marrones con <strong>anillos concéntricos</strong> (aspecto de diana),
+                normalmente en las hojas más viejas. Avanza lento pero reduce el rendimiento.</p>
+            </div>
+            <div class="panel disease danger">
+              <h4>🔴 Tizón tardío</h4>
+              <p class="sci">Phytophthora infestans</p>
+              <p class="muted">La enfermedad <strong>más destructiva</strong> de la papa: manchas irregulares
+                verdoso-marrón que se expanden muy rápido con clima húmedo y fresco; puede arrasar un cultivo
+                en pocos días.</p>
+            </div>
+          </div>
+
+          <!-- Aviso de uso responsable -->
+          <div class="panel notice">
+            <strong>⚠ Uso responsable.</strong> PapaScan es una <strong>herramienta de apoyo</strong> y no
+            reemplaza el criterio de un profesional. Las recomendaciones provienen de una base de conocimiento
+            de referencia; ante dudas o antes de aplicar agroquímicos, consulta a un <strong>técnico agrónomo o
+            a SENASA</strong>.
+          </div>
+        </section>
+
+        <!-- ---------- DIAGNÓSTICO ---------- -->
+        <section id="diagnostico" class="section hidden">
+          <button class="btn-back" data-goto="captura">← Volver a capturar</button>
+          <h2 class="section-title">Diagnóstico</h2>
+          <p class="section-sub">Clasificación de la hoja mediante red neuronal convolucional</p>
+          <div class="grid-2">
+            <div class="panel">
+              <h3 class="panel-title">Imagen capturada</h3>
+              <div class="img-frame"><img id="diag-img" alt="Hoja" /></div>
+              <div id="quality-badge" class="quality-badge"></div>
+              <p id="quality-summary" class="muted small"></p>
+            </div>
+            <div class="panel">
+              <h3 class="panel-title">Resultado del diagnóstico</h3>
+              <div id="result-card" class="result-card">
+                <div class="result-head">
+                  <div>
+                    <div id="diag-name" class="diag-name"></div>
+                    <div id="diag-sci" class="diag-sci"></div>
+                  </div>
+                  <div class="diag-conf"><span id="diag-conf-val"></span><small>confianza</small></div>
+                </div>
+              </div>
+              <h4 class="bars-title">Distribución de probabilidades</h4>
+              <div id="prob-bars" class="prob-bars"></div>
+              <div id="conf-alert" class="conf-alert hidden"></div>
+              <p id="model-meta" class="muted small"></p>
+            </div>
+          </div>
+          <h3 class="block-title">¿Qué quieres ver?</h3>
+          <div class="option-cards">
+            <button id="btn-explain" class="option-card">
+              <span class="oc-icon">🔍</span>
+              <span class="oc-body"><strong>Explicabilidad (Grad-CAM)</strong>
+                <small>Dónde miró el modelo + interpretación del asistente</small></span>
+              <span class="oc-arrow">→</span>
+            </button>
+            <button id="btn-recom" class="option-card">
+              <span class="oc-icon">🌱</span>
+              <span class="oc-body"><strong>Recomendación</strong>
+                <small>Plan de manejo según la base de conocimiento</small></span>
+              <span class="oc-arrow">→</span>
+            </button>
+          </div>
+        </section>
+
+        <!-- ---------- EXPLICABILIDAD ---------- -->
+        <section id="explicabilidad" class="section hidden">
+          <button class="btn-back" data-goto="diagnostico">← Volver al diagnóstico</button>
+          <h2 class="section-title">Explicabilidad — Grad-CAM</h2>
+          <p class="section-sub">Regiones de la hoja que sustentan la decisión del clasificador</p>
+          <div class="grid-3">
+            <div class="panel">
+              <h3 class="panel-title">Imagen original</h3>
+              <div class="img-frame"><img id="exp-original" alt="Original" /></div>
+            </div>
+            <div class="panel">
+              <h3 class="panel-title">Imagen enmascarada</h3>
+              <div class="img-frame"><img id="exp-masked" alt="Enmascarada" /></div>
+              <p class="muted small">Lo que ve el modelo: fondo neutralizado para que solo pese la hoja.</p>
+            </div>
+            <div class="panel">
+              <h3 class="panel-title">Mapa de calor superpuesto</h3>
+              <div class="img-frame heat"><img id="exp-overlay" alt="Grad-CAM" />
+                <div class="heat-legend"><span>Alta</span><div class="legend-bar"></div><span>Baja</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="panel interp">
+            <h3 class="panel-title">Interpretación</h3>
+            <p id="interp-text" class="interp-text"></p>
+            <div id="llm-explanation" class="llm-explanation"></div>
+            <!-- Chat de seguimiento (sincronizado con el de Recomendación) -->
+            <div class="chat">
+              <h4>Preguntas de seguimiento</h4>
+              <div class="chat-log" data-chat="case"></div>
+              <form class="chat-form" data-chat="case">
+                <input type="text" class="chat-input" placeholder="Ej.: ¿y si no consigo fungicida de cobre?" />
+                <button type="submit" class="btn-primary">Enviar</button>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <!-- ---------- RECOMENDACIÓN ---------- -->
+        <section id="recomendacion" class="section hidden">
+          <button class="btn-back" data-goto="diagnostico">← Volver al diagnóstico</button>
+          <h2 class="section-title">Recomendación terapéutica</h2>
+          <p class="section-sub">Plan de manejo generado por el motor de reglas sobre la base de conocimiento local</p>
+          <div class="rec-header" id="rec-header"></div>
+          <div id="rec-cards" class="rec-cards"></div>
+          <div class="panel traza"><strong>Trazabilidad</strong><p id="rec-traza" class="muted"></p></div>
+          <div class="rec-actions">
+            <button id="btn-export" class="btn-primary">Guardar y exportar reporte</button>
+          </div>
+          <!-- Chat de seguimiento (sincronizado con el de Explicabilidad) -->
+          <div class="panel chat">
+            <h4>Preguntas de seguimiento</h4>
+            <div class="chat-log" data-chat="case"></div>
+            <form class="chat-form" data-chat="case">
+              <input type="text" class="chat-input" placeholder="Ej.: ¿cada cuánto aplico el tratamiento?" />
+              <button type="submit" class="btn-primary">Enviar</button>
+            </form>
+          </div>
+        </section>
+
+        <!-- ---------- ASISTENTE (chat libre, sin diagnóstico) ---------- -->
+        <section id="asistente" class="section hidden">
+          <h2 class="section-title">Asistente</h2>
+          <p class="section-sub">Pregúntale al AgroAsistente sobre el cultivo de papa y sus enfermedades — sin necesidad de analizar una hoja</p>
+          <div class="panel notice">
+            Este asistente responde <strong>solo sobre la salud del cultivo</strong> (tizón tardío, tizón
+            temprano, cuidados de la papa). Es una herramienta de apoyo: ante decisiones de tratamiento,
+            consulta a un técnico agrónomo o a SENASA. Para un diagnóstico de una hoja concreta, usa
+            <strong>Nuevo análisis</strong>.
+          </div>
+          <div class="panel chat">
+            <div class="chat-log tall" data-chat="standalone"></div>
+            <form class="chat-form" data-chat="standalone">
+              <input type="text" class="chat-input" placeholder="Ej.: ¿cómo prevengo el tizón tardío?" />
+              <button type="submit" class="btn-primary">Enviar</button>
+            </form>
+          </div>
+        </section>
+
+        <!-- ---------- HISTORIAL ---------- -->
+        <section id="historial" class="section hidden">
+          <h2 class="section-title">Historial</h2>
+          <p class="section-sub">Casos analizados previamente (almacenados localmente)</p>
+          <div id="history-list" class="history-list"></div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <div id="loader" class="loader hidden"><div class="spinner"></div><p id="loader-text">Procesando…</p></div>
+
+  <script src="/static/js/app.js?v=4"></script>
+</body>
+</html>

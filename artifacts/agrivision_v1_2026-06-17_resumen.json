@@ -1,0 +1,141 @@
+{
+  "version_modelo": "agrivision_v1_2026-06-17",
+  "backbone": "efficientnet_b0",
+  "inspeccion": {
+    "n_baja_resolucion": 0,
+    "n_exceso_fondo": 173,
+    "n_fuga_potencial": 396,
+    "limpio": false
+  },
+  "verificaciones": {
+    "val_determinista": true,
+    "normalizacion": {
+      "media_por_canal": [
+        -0.25398892164230347,
+        -0.043678246438503265,
+        -0.2677095830440521
+      ],
+      "std_por_canal": [
+        1.0728102922439575,
+        1.0211840867996216,
+        1.0617527961730957
+      ],
+      "ok": true
+    },
+    "grid": "C:\\Users\\USER\\Desktop\\PROYECTO FINAL IA\\resultados\\agrivision_v1_2026-06-17_batch_aumentado.png"
+  },
+  "hpo": {
+    "best_params": {
+      "lr": 0.003967605077052989,
+      "batch_size": 32,
+      "dropout": 0.5849549260809972,
+      "weight_decay": 0.002136832907235877,
+      "num_trainable_blocks": 1
+    },
+    "best_value": 1.0,
+    "n_trials": 40,
+    "n_pruned": 21
+  },
+  "cv": {
+    "agregado": {
+      "mcc": {
+        "media": 0.9962655279503132,
+        "std": 0.0030491836601394466
+      },
+      "macro_f1": {
+        "media": 0.9974999023399352,
+        "std": 0.0020413211914283567
+      },
+      "recall": {
+        "sana": {
+          "media": 1.0,
+          "std": 0.0
+        },
+        "tizon_tardio": {
+          "media": 0.9949999999999999,
+          "std": 0.006123724356957924
+        },
+        "tizon_temprano": {
+          "media": 0.9974999999999999,
+          "std": 0.004999999999999982
+        }
+      },
+      "precision": {
+        "sana": {
+          "media": 0.9975308641975309,
+          "std": 0.004938271604938294
+        },
+        "tizon_tardio": {
+          "media": 0.9975308641975309,
+          "std": 0.004938271604938294
+        },
+        "tizon_temprano": {
+          "media": 0.9975308641975309,
+          "std": 0.004938271604938294
+        }
+      }
+    },
+    "balance": true
+  },
+  "test": {
+    "por_clase": {
+      "sana": {
+        "precision": 0.9615384615384616,
+        "recall": 1.0,
+        "f1": 0.9803921568627451,
+        "f2": 0.9920634920634921,
+        "support": 100
+      },
+      "tizon_tardio": {
+        "precision": 1.0,
+        "recall": 0.96,
+        "f1": 0.9795918367346939,
+        "f2": 0.967741935483871,
+        "support": 100
+      },
+      "tizon_temprano": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "f2": 1.0,
+        "support": 100
+      }
+    },
+    "global": {
+      "mcc": 0.9802614379131476,
+      "macro_f1": 0.9866613311991462,
+      "weighted_f1": 0.9866613311991462,
+      "accuracy": 0.9866666666666667
+    },
+    "produccion": {
+      "por_clase": {
+        "tizon_tardio": {
+          "metrica": "recall",
+          "valor": 0.96,
+          "minimo": 0.9,
+          "cumple": true
+        },
+        "tizon_temprano": {
+          "metrica": "recall",
+          "valor": 1.0,
+          "minimo": 0.8,
+          "cumple": true
+        },
+        "sana": {
+          "metrica": "precision",
+          "valor": 0.9615384615384616,
+          "minimo": null,
+          "cumple": true
+        }
+      },
+      "listo_produccion": true
+    }
+  },
+  "graficos": {
+    "curvas_entrenamiento": "C:\\Users\\USER\\Desktop\\PROYECTO FINAL IA\\resultados\\agrivision_v1_2026-06-17_curvas_entrenamiento.png",
+    "matriz_confusion": "C:\\Users\\USER\\Desktop\\PROYECTO FINAL IA\\resultados\\agrivision_v1_2026-06-17_matriz_confusion.png",
+    "sensibilidades": "C:\\Users\\USER\\Desktop\\PROYECTO FINAL IA\\resultados\\agrivision_v1_2026-06-17_sensibilidades_y_precision.png",
+    "boxplot_cv": "C:\\Users\\USER\\Desktop\\PROYECTO FINAL IA\\resultados\\agrivision_v1_2026-06-17_boxplot_cv.png",
+    "curvas_roc": "C:\\Users\\USER\\Desktop\\PROYECTO FINAL IA\\resultados\\agrivision_v1_2026-06-17_curvas_roc.png"
+  }
+}

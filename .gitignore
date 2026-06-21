@@ -1,0 +1,51 @@
+# ---------------------------------------------------------------------------
+# Python
+# ---------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.ipynb_checkpoints/
+
+# ---------------------------------------------------------------------------
+# Entorno / secretos (NO subir credenciales)
+# ---------------------------------------------------------------------------
+.env
+.env.local
+
+# ---------------------------------------------------------------------------
+# Datos: el dataset de imágenes NO se versiona (pesado y público).
+# Para re-entrenar, ver README (descarga de PlantVillage).
+# El MODELO ENTRENADO (artifacts/models/*.pt) SÍ se versiona: es lo que
+# permite correr la app sin re-entrenar (~16 MB, dentro del límite de GitHub).
+# ---------------------------------------------------------------------------
+Train_Valid/
+Test/
+data/
+
+# Estudios de Optuna (solo hacen falta para re-entrenar/analizar HPO)
+artifacts/optuna/*.db
+
+# ---------------------------------------------------------------------------
+# Salidas generadas en runtime (se regeneran; no aportan al repo)
+# ---------------------------------------------------------------------------
+outputs/
+storage/uploads/*
+storage/heatmaps/*
+storage/reports/*
+!storage/uploads/.gitkeep
+!storage/heatmaps/.gitkeep
+!storage/reports/.gitkeep
+
+# Logs
+*.log
+
+# ---------------------------------------------------------------------------
+# IDE / SO
+# ---------------------------------------------------------------------------
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store

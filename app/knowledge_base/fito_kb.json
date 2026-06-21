@@ -1,0 +1,82 @@
+{
+  "version": "kb-fito-v1-2026-06",
+  "disclaimer": "Base de conocimiento curada para apoyo a la decisión. Las dosis y productos deben ser validados por un ingeniero agrónomo y respetar las etiquetas y el registro SENASA vigente antes de aplicarse. No reemplaza el criterio de un técnico.",
+  "regiones_por_defecto": "Sierra andina",
+  "enfermedades": {
+    "sana": {
+      "nombre": "Hoja sana",
+      "patogeno": "—",
+      "estadio_fenologico_tipico": "—",
+      "urgencia": "ninguna",
+      "controles": [
+        {
+          "titulo": "Manejo preventivo",
+          "contenido": "No se detectan signos de enfermedad. Mantener el monitoreo periódico del cultivo, especialmente tras lluvias o alta humedad.",
+          "fuente": "KB-fito local · regla S01"
+        },
+        {
+          "titulo": "Buenas prácticas",
+          "contenido": "Usar semilla certificada, rotar con cultivos no hospederos y evitar el riego por aspersión al atardecer para reducir la humedad foliar.",
+          "fuente": "KB-fito local · regla S02"
+        },
+        {
+          "titulo": "Vigilancia",
+          "contenido": "Revisar las hojas bajeras y los bordes del lote cada 5-7 días; ante las primeras manchas, volver a analizar.",
+          "fuente": "KB-fito local · regla S03"
+        }
+      ]
+    },
+    "tizon_tardio": {
+      "nombre": "Tizón tardío",
+      "patogeno": "Phytophthora infestans",
+      "estadio_fenologico_tipico": "Tuberización",
+      "urgencia": "alta",
+      "controles": [
+        {
+          "titulo": "Control químico",
+          "contenido": "Fungicida sistémico a base de metalaxil + mancozeb. Dosis de referencia: 2.5 g/L. Reaplicar cada 7 días respetando el periodo de carencia indicado en la etiqueta.",
+          "fuente": "KB-fito local · regla R01"
+        },
+        {
+          "titulo": "Control cultural",
+          "contenido": "Eliminar y enterrar (o quemar) el follaje infectado. Mejorar el drenaje y evitar el riego por aspersión al atardecer para reducir la humedad.",
+          "fuente": "KB-fito local · regla R02"
+        },
+        {
+          "titulo": "Control biológico / preventivo",
+          "contenido": "Aplicar Trichoderma spp. al suelo. Usar semilla certificada y rotar con cultivos no hospederos. Monitoreo cada 3-4 días por el avance rápido del patógeno.",
+          "fuente": "KB-fito local · regla R03"
+        }
+      ]
+    },
+    "tizon_temprano": {
+      "nombre": "Tizón temprano",
+      "patogeno": "Alternaria solani",
+      "estadio_fenologico_tipico": "Desarrollo de follaje",
+      "urgencia": "media",
+      "controles": [
+        {
+          "titulo": "Control químico",
+          "contenido": "Fungicida protectante a base de clorotalonil o mancozeb; en presión alta, alternar con azoxistrobina. Dosis de referencia: 2.0-2.5 g/L. Respetar el periodo de carencia de la etiqueta.",
+          "fuente": "KB-fito local · regla R04"
+        },
+        {
+          "titulo": "Control cultural",
+          "contenido": "Retirar hojas bajeras afectadas, mantener una fertilización nitrogenada equilibrada (las plantas débiles son más susceptibles) y evitar el estrés hídrico.",
+          "fuente": "KB-fito local · regla R05"
+        },
+        {
+          "titulo": "Control biológico / preventivo",
+          "contenido": "Rotación con cultivos no hospederos, semilla sana y eliminación de rastrojos. Monitoreo cada 5-7 días; la enfermedad avanza más lento que el tizón tardío.",
+          "fuente": "KB-fito local · regla R06"
+        }
+      ]
+    }
+  },
+  "modificadores_severidad": {
+    "leve": "Severidad leve: priorizar control cultural y preventivo; el control químico puede ser puntual y localizado.",
+    "moderada": "Severidad moderada: combinar control químico y cultural; iniciar aplicaciones según calendario.",
+    "severa": "Severidad severa: aplicar control químico de inmediato y reforzar el control cultural; considerar consultar a un técnico agrónomo.",
+    "ninguna": ""
+  }
+}

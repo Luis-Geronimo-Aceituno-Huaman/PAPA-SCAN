@@ -1,0 +1,47 @@
+# =============================================================================
+# AgriVision + PapaScan — dependencias (Windows / macOS / Linux)
+#
+# Instalación estándar (CPU o GPU NVIDIA común), funciona en cualquier SO:
+#   python -m venv .venv
+#   # Windows:        .venv\Scripts\activate
+#   # macOS / Linux:  source .venv/bin/activate
+#   pip install -r requirements.txt
+#
+# -----------------------------------------------------------------------------
+# NOTA GPU NVIDIA RTX 50 (Blackwell, sm_120 — p.ej. RTX 5060):
+# Esa serie necesita un build de torch con CUDA >= 12.8. El torch de abajo
+# (PyPI) corre en CPU y en GPUs NVIDIA ya soportadas. Si tu PC tiene una
+# RTX 50, instalá torch/torchvision aparte ANTES que el resto:
+#   pip install --pre torch torchvision --index-url https://download.pytorch.org/whl/nightly/cu132
+# La INFERENCIA (correr la app) funciona perfecto en CPU; la GPU solo acelera
+# el re-entrenamiento.
+# =============================================================================
+
+# --- Deep learning -----------------------------------------------------------
+torch>=2.2
+torchvision>=0.17
+
+# --- Modelo / ciencia de datos ----------------------------------------------
+optuna>=3.6
+scikit-learn>=1.5
+numpy>=1.26
+pandas>=2.2
+matplotlib>=3.8
+seaborn>=0.13
+pillow>=10.0
+opencv-python>=4.9
+tqdm>=4.66
+scipy>=1.12
+
+# --- App web (PapaScan: API + auth + BD) ------------------------------------
+fastapi>=0.111
+uvicorn[standard]>=0.30
+sqlalchemy>=2.0
+psycopg2-binary>=2.9
+python-jose[cryptography]>=3.3
+bcrypt>=4.1
+pydantic>=2.7
+python-multipart>=0.0.9
+
+# --- LLM local (cliente de Ollama) ------------------------------------------
+ollama>=0.3

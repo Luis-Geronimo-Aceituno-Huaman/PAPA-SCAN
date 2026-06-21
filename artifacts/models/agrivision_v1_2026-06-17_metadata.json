@@ -1,0 +1,112 @@
+{
+  "version_modelo": "agrivision_v1_2026-06-17",
+  "fecha": "2026-06-17",
+  "backbone": "efficientnet_b0",
+  "hiperparametros": {
+    "lr": 0.003967605077052989,
+    "batch_size": 32,
+    "dropout": 0.5849549260809972,
+    "weight_decay": 0.002136832907235877,
+    "num_trainable_blocks": 1
+  },
+  "capa_gradcam": "features[-1]",
+  "temperatura": 0.5,
+  "umbrales_por_clase": {
+    "sana": 0.9999998807907104,
+    "tizon_tardio": 0.5525359511375427,
+    "tizon_temprano": 0.9200830459594727
+  },
+  "umbrales_detalle": {
+    "sana": {
+      "umbral": 0.9999998807907104,
+      "auc": 1.0,
+      "tpr_operacion": 1.0,
+      "fpr_operacion": 0.0,
+      "recall_objetivo": null
+    },
+    "tizon_tardio": {
+      "umbral": 0.5525359511375427,
+      "auc": 1.0,
+      "tpr_operacion": 1.0,
+      "fpr_operacion": 0.0,
+      "recall_objetivo": 0.9
+    },
+    "tizon_temprano": {
+      "umbral": 0.9200830459594727,
+      "auc": 1.0,
+      "tpr_operacion": 1.0,
+      "fpr_operacion": 0.0,
+      "recall_objetivo": 0.8
+    }
+  },
+  "metricas_entrenamiento_por_clase": {
+    "sana": 0.9975308641975309,
+    "tizon_tardio": 0.9949999999999999,
+    "tizon_temprano": 0.9974999999999999
+  },
+  "metricas_test": {
+    "por_clase": {
+      "sana": {
+        "precision": 0.9615384615384616,
+        "recall": 1.0,
+        "f1": 0.9803921568627451,
+        "f2": 0.9920634920634921,
+        "support": 100
+      },
+      "tizon_tardio": {
+        "precision": 1.0,
+        "recall": 0.96,
+        "f1": 0.9795918367346939,
+        "f2": 0.967741935483871,
+        "support": 100
+      },
+      "tizon_temprano": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "f2": 1.0,
+        "support": 100
+      }
+    },
+    "global": {
+      "mcc": 0.9802614379131476,
+      "macro_f1": 0.9866613311991462,
+      "weighted_f1": 0.9866613311991462,
+      "accuracy": 0.9866666666666667
+    },
+    "produccion": {
+      "por_clase": {
+        "tizon_tardio": {
+          "metrica": "recall",
+          "valor": 0.96,
+          "minimo": 0.9,
+          "cumple": true
+        },
+        "tizon_temprano": {
+          "metrica": "recall",
+          "valor": 1.0,
+          "minimo": 0.8,
+          "cumple": true
+        },
+        "sana": {
+          "metrica": "precision",
+          "valor": 0.9615384615384616,
+          "minimo": null,
+          "cumple": true
+        }
+      },
+      "listo_produccion": true
+    }
+  },
+  "clases": [
+    "sana",
+    "tizon_tardio",
+    "tizon_temprano"
+  ],
+  "umbral_sesgo_fondo": 0.6973899480291269,
+  "sesgo_calibracion": {
+    "percentil": 90.0,
+    "n_muestras": 179,
+    "media_masa_fondo": 0.4530722444948179
+  }
+}

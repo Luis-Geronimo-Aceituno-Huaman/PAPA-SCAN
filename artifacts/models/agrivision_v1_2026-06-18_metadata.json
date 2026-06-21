@@ -1,0 +1,112 @@
+{
+  "version_modelo": "agrivision_v1_2026-06-18",
+  "fecha": "2026-06-18",
+  "backbone": "efficientnet_b0",
+  "hiperparametros": {
+    "lr": 0.0005987474910461401,
+    "batch_size": 32,
+    "dropout": 0.13252579649263976,
+    "weight_decay": 0.006245139574743076,
+    "num_trainable_blocks": 5
+  },
+  "capa_gradcam": "features[-1]",
+  "temperatura": 0.5,
+  "umbrales_por_clase": {
+    "sana": 1.0,
+    "tizon_tardio": 0.9999942779541016,
+    "tizon_temprano": 0.61300128698349
+  },
+  "umbrales_detalle": {
+    "sana": {
+      "umbral": 1.0,
+      "auc": 1.0,
+      "tpr_operacion": 1.0,
+      "fpr_operacion": 0.0,
+      "recall_objetivo": null
+    },
+    "tizon_tardio": {
+      "umbral": 0.9999942779541016,
+      "auc": 1.0,
+      "tpr_operacion": 1.0,
+      "fpr_operacion": 0.0,
+      "recall_objetivo": 0.9
+    },
+    "tizon_temprano": {
+      "umbral": 0.61300128698349,
+      "auc": 1.0,
+      "tpr_operacion": 1.0,
+      "fpr_operacion": 0.0,
+      "recall_objetivo": 0.8
+    }
+  },
+  "metricas_entrenamiento_por_clase": {
+    "sana": 1.0,
+    "tizon_tardio": 1.0,
+    "tizon_temprano": 1.0
+  },
+  "metricas_test": {
+    "por_clase": {
+      "sana": {
+        "precision": 0.970873786407767,
+        "recall": 1.0,
+        "f1": 0.9852216748768473,
+        "f2": 0.9940357852882704,
+        "support": 100
+      },
+      "tizon_tardio": {
+        "precision": 1.0,
+        "recall": 0.97,
+        "f1": 0.9847715736040609,
+        "f2": 0.9758551307847082,
+        "support": 100
+      },
+      "tizon_temprano": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "f2": 1.0,
+        "support": 100
+      }
+    },
+    "global": {
+      "mcc": 0.9851477832520631,
+      "macro_f1": 0.9899977494936362,
+      "weighted_f1": 0.989997749493636,
+      "accuracy": 0.99
+    },
+    "produccion": {
+      "por_clase": {
+        "tizon_tardio": {
+          "metrica": "recall",
+          "valor": 0.97,
+          "minimo": 0.9,
+          "cumple": true
+        },
+        "tizon_temprano": {
+          "metrica": "recall",
+          "valor": 1.0,
+          "minimo": 0.8,
+          "cumple": true
+        },
+        "sana": {
+          "metrica": "precision",
+          "valor": 0.970873786407767,
+          "minimo": null,
+          "cumple": true
+        }
+      },
+      "listo_produccion": true
+    }
+  },
+  "clases": [
+    "sana",
+    "tizon_tardio",
+    "tizon_temprano"
+  ],
+  "umbral_sesgo_fondo": 0.0,
+  "sesgo_calibracion": {
+    "percentil": 90.0,
+    "n_muestras": 180,
+    "media_masa_fondo": 0.0
+  }
+}

@@ -1,0 +1,1 @@
+"""PapaScan — capa de aplicación."""
