@@ -11,7 +11,7 @@ from app.deps import get_current_user
 from app.models import Case, ChatMessage, User
 from app.schemas import ChatRequest, ChatResponse
 from app.services import llm_client
-from multiagente import web as ma_web
+from app.multiagente import web as ma_web
 
 router = APIRouter(prefix="/api", tags=["chat"])
 

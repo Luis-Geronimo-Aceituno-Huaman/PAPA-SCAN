@@ -9,8 +9,8 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
-# multiagente/core/bootstrap.py -> parents[2] = raíz del proyecto.
-ROOT_DIR = Path(__file__).resolve().parents[2]
+# app/multiagente/core/bootstrap.py -> parents[3] = raíz del proyecto.
+ROOT_DIR = Path(__file__).resolve().parents[3]
 OUTPUTS_DIR = Path(__file__).resolve().parents[1] / "outputs"
 
 

@@ -5,8 +5,8 @@ Grad-CAM y la lesión (confirma que el modelo miró la lesión real, no el fondo
 """
 from __future__ import annotations
 
-from multiagente.core import bootstrap  # noqa: F401
-from multiagente.tools.registry import registry
+from app.multiagente.core import bootstrap  # noqa: F401
+from app.multiagente.tools.registry import registry
 
 
 @registry.register(

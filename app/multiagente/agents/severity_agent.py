@@ -6,9 +6,9 @@ modelo haya mirado la lesión real y no el fondo.
 """
 from __future__ import annotations
 
-from multiagente.core.agent import Agent
-from multiagente.core.blackboard import Blackboard
-from multiagente.tools.registry import registry
+from app.multiagente.core.agent import Agent
+from app.multiagente.core.blackboard import Blackboard
+from app.multiagente.tools.registry import registry
 
 
 class SeverityAgent(Agent):

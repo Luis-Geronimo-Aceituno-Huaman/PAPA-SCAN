@@ -9,8 +9,8 @@ medios lo decide el agente vía un MediaSink (web vs CLI).
 """
 from __future__ import annotations
 
-from multiagente.core import bootstrap  # noqa: F401  (configura sys.path)
-from multiagente.tools.registry import registry
+from app.multiagente.core import bootstrap  # noqa: F401  (configura sys.path)
+from app.multiagente.tools.registry import registry
 
 
 @registry.register(

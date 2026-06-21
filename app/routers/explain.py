@@ -15,7 +15,7 @@ from app.deps import get_current_user
 from app.models import Case, User
 from app.schemas import ExplainResponse, Explicacion
 from app.services import rules_engine
-from multiagente import web as ma_web
+from app.multiagente import web as ma_web
 
 router = APIRouter(prefix="/api", tags=["explain"])
 

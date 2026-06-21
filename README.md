@@ -9,7 +9,7 @@ Sistema **100 % local y offline** para diagnóstico de enfermedades foliares de 
    da un motor de reglas, no el LLM (por seguridad). **Su motor interno es
    multiagente**: un Coordinador despacha agentes especialistas (Percepción,
    Validador, Severidad, Agrónomo, Explicador) sobre una pizarra compartida
-   (ver [`multiagente/`](multiagente/)). El frontend y la API no cambian.
+   (ver [`app/multiagente/`](app/multiagente/)). El frontend y la API no cambian.
 
 ## Clases
 
@@ -105,6 +105,8 @@ resultados/             Gráficos de evaluación
 app/                    App PapaScan (FastAPI)
   main.py settings.py database.py models.py security.py ...
   services/  routers/  knowledge_base/  templates/  static/
+  multiagente/          Motor multiagente (Coordinador + agentes + herramientas)
+                        — el cerebro de la app; también CLI: python -m app.multiagente
 storage/                uploads/ heatmaps/ reports/ (se generan en runtime)
 docker-compose.yml      PostgreSQL para levantar la BD en un comando
 ```

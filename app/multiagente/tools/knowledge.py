@@ -6,8 +6,8 @@ LLM. El agente Agrónomo solo puede CONSULTAR estas herramientas; no inventa.
 """
 from __future__ import annotations
 
-from multiagente.core import bootstrap  # noqa: F401
-from multiagente.tools.registry import registry
+from app.multiagente.core import bootstrap  # noqa: F401
+from app.multiagente.tools.registry import registry
 
 
 @registry.register(

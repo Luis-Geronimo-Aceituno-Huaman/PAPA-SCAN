@@ -1,10 +1,10 @@
 """CLI del sistema PapaScan Multiagente.
 
-Ejemplos:
-    python -m multiagente.run --image ruta/a/hoja.jpg
-    python -m multiagente.run --image hoja.jpg --no-llm          # sin LLM (offline puro)
-    python -m multiagente.run --image hoja.jpg --json            # salida JSON
-    python -m multiagente.run --image hoja.jpg --ask "¿es contagioso?"
+Ejemplos (desde la raíz del proyecto, con el venv activado):
+    python -m app.multiagente --image ruta/a/hoja.jpg
+    python -m app.multiagente --image hoja.jpg --no-llm          # sin LLM (offline puro)
+    python -m app.multiagente --image hoja.jpg --json            # salida JSON
+    python -m app.multiagente --image hoja.jpg --ask "¿es contagioso?"
 """
 from __future__ import annotations
 
@@ -13,7 +13,7 @@ import json
 import sys
 from pathlib import Path
 
-from multiagente.coordinator import Coordinator
+from app.multiagente.coordinator import Coordinator
 
 
 def _print_transcript(bb) -> None:

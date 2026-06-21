@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 
-from multiagente.core.blackboard import Blackboard
+from app.multiagente.core.blackboard import Blackboard
 
 
 class Agent(ABC):

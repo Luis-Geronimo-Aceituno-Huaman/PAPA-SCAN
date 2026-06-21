@@ -7,11 +7,11 @@ que el orquestador deje en la pizarra (web → carpetas de la app; CLI → outpu
 """
 from __future__ import annotations
 
-from multiagente.core.agent import Agent
-from multiagente.core.blackboard import Blackboard
-from multiagente.core.bootstrap import OUTPUTS_DIR
-from multiagente.core.media import DirMediaSink
-from multiagente.tools.registry import registry
+from app.multiagente.core.agent import Agent
+from app.multiagente.core.blackboard import Blackboard
+from app.multiagente.core.bootstrap import OUTPUTS_DIR
+from app.multiagente.core.media import DirMediaSink
+from app.multiagente.tools.registry import registry
 
 # Sink por defecto (CLI): todo en multiagente/outputs/ con nombres legibles.
 _DEFAULT_SINK = DirMediaSink(

@@ -1,11 +1,11 @@
 # PapaScan Multiagente 🥔🤖
 
-Versión **multiagente** del sistema de diagnóstico de papa. Vive en su propia
-carpeta y **no toca** el proyecto base: reutiliza la CNN AgriVision (Grad-CAM) y
-los servicios del proyecto (severidad, reglas + KB, LLM) **como herramientas**.
+**Motor multiagente de PapaScan** (`app/multiagente/`). Es el cerebro del
+sistema: la app web (`app/`) lo usa por dentro y también se puede correr por CLI.
+Reutiliza la CNN AgriVision (Grad-CAM) y los servicios (severidad, reglas + KB,
+LLM) **como herramientas** — no duplica código.
 
-Mientras el proyecto base ejecuta un **pipeline fijo** (un orquestador llama a
-cada paso en orden), aquí hay **agentes autónomos** coordinados por un
+En vez de un pipeline fijo, hay **agentes autónomos** coordinados por un
 **supervisor** que reparte el trabajo y enruta según el caso, comunicándose por
 una **pizarra (blackboard)** compartida.
 
@@ -67,26 +67,26 @@ Desde la raíz del proyecto (con el venv activado):
 
 ```bash
 # Diagnóstico completo (usa LLM si Ollama está disponible)
-python -m multiagente.run --image "Test/Potato___Early_blight/alguna.JPG"
+python -m app.multiagente --image "Test/Potato___Early_blight/alguna.JPG"
 
 # Sin LLM (offline puro, respaldo determinístico)
-python -m multiagente.run --image hoja.jpg --no-llm
+python -m app.multiagente --image hoja.jpg --no-llm
 
 # Salida JSON (para integrar con otra cosa)
-python -m multiagente.run --image hoja.jpg --json
+python -m app.multiagente --image hoja.jpg --json
 
 # Con una pregunta de seguimiento al agente conversacional
-python -m multiagente.run --image hoja.jpg --ask "¿es contagioso?"
+python -m app.multiagente --image hoja.jpg --ask "¿es contagioso?"
 ```
 
 La salida muestra el **diálogo entre agentes** (trazabilidad), el **reporte final**
 (diagnóstico, severidad, recomendación, explicación, verificación de seguridad) y
-las rutas de la foto/heatmap/overlay generados en `multiagente/outputs/`.
+las rutas de la foto/heatmap/overlay generados en `app/multiagente/outputs/`.
 
 ## Relación con el proyecto base
 
 **La app web PapaScan (`app/`) ahora corre sobre este motor multiagente.** El
-puente está en `multiagente/web.py`, que `app/services/orchestrator.py` invoca:
+puente está en `app/multiagente/web.py`, que `app/services/orchestrator.py` invoca:
 
 - `POST /api/diagnose` → fase de diagnóstico (Percepción → Validador → Severidad
   → Agrónomo).
@@ -97,7 +97,7 @@ El frontend, la API y la base de datos **no cambiaron**: solo se reemplazó el
 "cerebro" (antes un pipeline fijo, ahora agentes). Se puede usar de dos formas:
 
 - **Web**: `python -m uvicorn app.main:app --host 0.0.0.0 --port 8000` → navegador.
-- **CLI** (este módulo): `python -m multiagente.run --image <img>`.
+- **CLI** (este módulo): `python -m app.multiagente --image <img>`.
 
 Como las herramientas son finas envolturas de `app.services`/`src`, cualquier
 mejora en esos servicios la heredan ambos modos.
@@ -105,12 +105,13 @@ mejora en esos servicios la heredan ambos modos.
 ## Estructura
 
 ```
-multiagente/
-  core/         blackboard.py · agent.py · bootstrap.py
+app/multiagente/
+  core/         blackboard.py · agent.py · bootstrap.py · media.py
   tools/        registry.py · vision · severity · knowledge · explanation
   agents/       perception · severity_agent · agronomist · explainer
                 validator · conversational
   coordinator.py   Supervisor que orquesta el flujo
-  run.py           CLI
+  web.py           Puente con la app web (diagnose/explain/chat)
+  run.py           CLI (python -m app.multiagente)
   outputs/         foto/heatmap/overlay generados (no se versiona)
 ```

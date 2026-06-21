@@ -11,11 +11,11 @@ Tres entradas, espejo de los routers:
 """
 from __future__ import annotations
 
-from multiagente.core import bootstrap  # noqa: F401  (configura sys.path)
-from multiagente.agents import ConversationalAgent, ExplainerAgent, ValidatorAgent
-from multiagente.core.blackboard import Blackboard
-from multiagente.core.media import DirMediaSink
-from multiagente.coordinator import Coordinator
+from app.multiagente.core import bootstrap  # noqa: F401  (configura sys.path)
+from app.multiagente.agents import ConversationalAgent, ExplainerAgent, ValidatorAgent
+from app.multiagente.core.blackboard import Blackboard
+from app.multiagente.core.media import DirMediaSink
+from app.multiagente.coordinator import Coordinator
 
 
 def _web_sink() -> DirMediaSink:

@@ -13,12 +13,12 @@ patrón estándar de sistemas multiagente (supervisor + especialistas).
 """
 from __future__ import annotations
 
-from multiagente.agents import (
+from app.multiagente.agents import (
     AgronomistAgent, ConversationalAgent, ExplainerAgent,
     PerceptionAgent, SeverityAgent, ValidatorAgent,
 )
-from multiagente.core.blackboard import Blackboard
-from multiagente.tools import registry  # noqa: F401  (registra herramientas)
+from app.multiagente.core.blackboard import Blackboard
+from app.multiagente.tools import registry  # noqa: F401  (registra herramientas)
 
 
 class Coordinator:

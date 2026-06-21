@@ -17,8 +17,8 @@ from __future__ import annotations
 
 import re
 
-from multiagente.core.agent import Agent
-from multiagente.core.blackboard import Blackboard
+from app.multiagente.core.agent import Agent
+from app.multiagente.core.blackboard import Blackboard
 
 # Patrón de "dosis": número seguido de unidad agronómica (g/L, ml, kg, %, cc...).
 _DOSIS_RE = re.compile(r"\d+([.,]\d+)?\s*(g/?l|g|ml|cc|kg|l|%)\b", re.IGNORECASE)

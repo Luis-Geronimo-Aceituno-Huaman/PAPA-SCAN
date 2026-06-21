@@ -10,7 +10,7 @@ La versión pipeline anterior queda en el historial de git.
 """
 from __future__ import annotations
 
-from multiagente import web as _ma_web
+from app.multiagente import web as _ma_web
 
 
 def run(image_bytes: bytes, prefix: str, with_llm: bool = True) -> dict:
