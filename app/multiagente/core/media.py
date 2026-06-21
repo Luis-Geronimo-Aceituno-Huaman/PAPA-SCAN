@@ -1,7 +1,7 @@
 """Persistencia de medios (foto, enmascarada, overlay, heatmap).
 
 El AgentePercepcion produce arrays en memoria; DÓNDE se guardan depende de quién
-use el sistema: la CLI escribe en ``multiagente/outputs/``; la web escribe en las
+use el sistema: la CLI escribe en ``app/multiagente/outputs/``; la web escribe en las
 carpetas de la app (``storage/uploads`` y ``storage/heatmaps``). Para no acoplar
 el agente a esa decisión, se le inyecta un *MediaSink* por la pizarra.
 """

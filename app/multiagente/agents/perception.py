@@ -13,7 +13,7 @@ from app.multiagente.core.bootstrap import OUTPUTS_DIR
 from app.multiagente.core.media import DirMediaSink
 from app.multiagente.tools.registry import registry
 
-# Sink por defecto (CLI): todo en multiagente/outputs/ con nombres legibles.
+# Sink por defecto (CLI): todo en app/multiagente/outputs/ con nombres legibles.
 _DEFAULT_SINK = DirMediaSink(
     OUTPUTS_DIR, foto_tpl="{p}_foto.jpg", masked_tpl="{p}_masked.png",
     overlay_tpl="{p}_overlay.png", heatmap_tpl="{p}_heatmap.png",
