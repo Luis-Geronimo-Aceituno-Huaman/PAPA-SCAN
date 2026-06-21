@@ -1,10 +1,11 @@
 """Coordinador (Supervisor): el cerebro que reparte el trabajo entre agentes.
 
-A diferencia del pipeline rígido del proyecto base, aquí el Coordinador DECIDE
-el plan y despacha a cada agente especialista, enrutando según lo que aparece en
-la pizarra (p. ej. si la confianza es baja, marca derivación; si la hoja es
-sana, la severidad se resuelve sola). Cada agente es autónomo en su tarea; el
-Coordinador solo orquesta y, al final, sintetiza el reporte.
+A diferencia del pipeline rígido anterior, el Coordinador DECIDE el plan y
+despacha a cada agente especialista, enrutando según lo que aparece en la
+pizarra. Cada agente es autónomo en su tarea; el Coordinador orquesta y sintetiza.
+
+Expone el flujo en dos fases (igual que la API web): el DIAGNÓSTICO (rápido, sin
+LLM) y la EXPLICACIÓN (capa LLM opcional). La CLI ejecuta ambas de corrido.
 
 El plan es determinístico a propósito (robusto incluso con un LLM pequeño): el
 "agente" que planifica es este supervisor con reglas de enrutamiento claras, un
@@ -32,36 +33,41 @@ class Coordinator:
         self.conversacional = ConversationalAgent()
 
     # ------------------------------------------------------------------ #
-    def diagnosticar(self, image_path: str, case_id: str = "caso") -> Blackboard:
-        """Ejecuta el flujo multiagente completo sobre una imagen."""
-        bb = Blackboard(case_id=case_id, image_path=image_path)
-        bb.post(self.name, f"Nuevo caso «{case_id}». Plan: percepción → validación → "
-                           "severidad → agrónomo → explicación → verificación final.")
-
-        # 1) Percepción (CNN + Grad-CAM).
+    # Fase 1: diagnóstico (sin LLM). Percepción → validación → severidad → agrónomo.
+    # ------------------------------------------------------------------ #
+    def fase_diagnostico(self, bb: Blackboard) -> Blackboard:
         bb.post(self.name, "→ Despacho AgentePercepcion.")
         self.percepcion.act(bb)
 
-        # 2) Validación temprana (confianza / sesgo → ¿derivar a humano?).
-        bb.post(self.name, "→ Despacho AgenteValidador (pre-control).")
+        bb.post(self.name, "→ Despacho AgenteValidador (pre-control de confianza/sesgo).")
         self.validador.act(bb)
 
-        # 3) Severidad (el propio agente resuelve el caso 'sana').
         bb.post(self.name, "→ Despacho AgenteSeveridad.")
         self.severidad.act(bb)
 
-        # 4) Agrónomo (recomendación anclada a la KB).
         bb.post(self.name, "→ Despacho AgenteAgronomo.")
         self.agronomo.act(bb)
+        return bb
 
-        # 5) Explicación (LLM multimodal; con respaldo determinístico).
+    # ------------------------------------------------------------------ #
+    # Fase 2: explicación (capa LLM opcional). Explicador → validación final.
+    # ------------------------------------------------------------------ #
+    def fase_explicacion(self, bb: Blackboard) -> Blackboard:
         bb.post(self.name, "→ Despacho AgenteExplicador.")
         self.explicador.act(bb)
 
-        # 6) Verificación final de seguridad de la explicación.
-        bb.post(self.name, "→ Despacho AgenteValidador (post-control).")
+        bb.post(self.name, "→ Despacho AgenteValidador (post-control anti-alucinación).")
         self.validador.act(bb)
+        return bb
 
+    # ------------------------------------------------------------------ #
+    def diagnosticar(self, image_path: str, case_id: str = "caso") -> Blackboard:
+        """Ejecuta el flujo multiagente completo (diagnóstico + explicación)."""
+        bb = Blackboard(case_id=case_id, image_path=image_path)
+        bb.post(self.name, f"Nuevo caso «{case_id}». Plan: percepción → validación → "
+                           "severidad → agrónomo → explicación → verificación final.")
+        self.fase_diagnostico(bb)
+        self.fase_explicacion(bb)
         bb.post(self.name, "Caso resuelto. Sintetizando reporte.")
         return bb
 

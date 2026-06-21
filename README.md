@@ -5,9 +5,11 @@ Sistema **100 % local y offline** para diagnóstico de enfermedades foliares de 
 
 1. **AgriVision** — modelo de visión: CNN (EfficientNet-B0) + **Grad-CAM**. Clasifica
    3 clases y explica visualmente dónde mira. ✅ ya entrenado (incluido en el repo).
-2. **PapaScan** — app web (FastAPI): encadena CNN → Grad-CAM → severidad → motor de
-   reglas → **LLM local (Ollama)** que explica el mapa de calor, con login, historial
-   y chat. La recomendación la da un motor de reglas, no el LLM (por seguridad).
+2. **PapaScan** — app web (FastAPI) con login, historial y chat. La recomendación la
+   da un motor de reglas, no el LLM (por seguridad). **Su motor interno es
+   multiagente**: un Coordinador despacha agentes especialistas (Percepción,
+   Validador, Severidad, Agrónomo, Explicador) sobre una pizarra compartida
+   (ver [`multiagente/`](multiagente/)). El frontend y la API no cambian.
 
 ## Clases
 

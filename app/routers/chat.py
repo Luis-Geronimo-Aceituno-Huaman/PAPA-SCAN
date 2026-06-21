@@ -11,6 +11,7 @@ from app.deps import get_current_user
 from app.models import Case, ChatMessage, User
 from app.schemas import ChatRequest, ChatResponse
 from app.services import llm_client
+from multiagente import web as ma_web
 
 router = APIRouter(prefix="/api", tags=["chat"])
 
@@ -41,7 +42,7 @@ def chat(payload: ChatRequest, db: Session = Depends(get_db),
     if payload.case_id is None:
         historial = [{"role": t.role, "content": t.content}
                      for t in payload.historial[-_MAX_FREE_HISTORY:]]
-        respuesta, disponible = llm_client.chat(
+        respuesta, disponible = ma_web.responder(
             historial, _GENERAL_CONTEXT, payload.mensaje,
             system_prompt=llm_client.GENERAL_CHAT_SYSTEM_PROMPT)
         return ChatResponse(respuesta=respuesta, disponible=disponible)
@@ -54,7 +55,7 @@ def chat(payload: ChatRequest, db: Session = Depends(get_db),
 
     historial = [{"role": m.role, "content": m.content} for m in case.messages]
     contexto = _case_context(case)
-    respuesta, disponible = llm_client.chat(historial, contexto, payload.mensaje)
+    respuesta, disponible = ma_web.responder(historial, contexto, payload.mensaje)
 
     # Persistir la conversación (pregunta + respuesta).
     db.add(ChatMessage(case_id=case.id, role="user", content=payload.mensaje))

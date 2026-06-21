@@ -85,10 +85,22 @@ las rutas de la foto/heatmap/overlay generados en `multiagente/outputs/`.
 
 ## Relación con el proyecto base
 
-- **No reemplaza** a la app PapaScan (`app/`): es una arquitectura alternativa.
-- **Reutiliza** el modelo y la lógica probada; si cambias un servicio en `app/`,
-  el sistema multiagente lo hereda (las herramientas son finas envolturas).
-- Pensado para demostrar el enfoque **multiagente** sin perder el trabajo previo.
+**La app web PapaScan (`app/`) ahora corre sobre este motor multiagente.** El
+puente está en `multiagente/web.py`, que `app/services/orchestrator.py` invoca:
+
+- `POST /api/diagnose` → fase de diagnóstico (Percepción → Validador → Severidad
+  → Agrónomo).
+- `POST /api/explain/{id}` → fase de explicación (Explicador + Validador final).
+- `POST /api/chat` → AgenteConversacional.
+
+El frontend, la API y la base de datos **no cambiaron**: solo se reemplazó el
+"cerebro" (antes un pipeline fijo, ahora agentes). Se puede usar de dos formas:
+
+- **Web**: `python -m uvicorn app.main:app --host 0.0.0.0 --port 8000` → navegador.
+- **CLI** (este módulo): `python -m multiagente.run --image <img>`.
+
+Como las herramientas son finas envolturas de `app.services`/`src`, cualquier
+mejora en esos servicios la heredan ambos modos.
 
 ## Estructura
 

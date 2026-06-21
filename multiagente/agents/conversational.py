@@ -1,8 +1,13 @@
-"""Agente Conversacional: atiende preguntas de seguimiento sobre el caso.
+"""Agente Conversacional: atiende preguntas de seguimiento.
 
-Usa el LLM local restringido al tema del cultivo (la guarda off-topic vive en
-`llm_client.chat`). Construye el contexto del caso desde la pizarra para que las
-respuestas estén ancladas al diagnóstico ya hecho.
+Dos modos:
+- por CASO: el contexto sale de la pizarra (diagnóstico ya hecho); usa el system
+  prompt de caso.
+- LIBRE: sin diagnóstico (pestaña Asistente), con un contexto general y el system
+  prompt general.
+
+La guarda off-topic vive en `llm_client.chat`. Construye el contexto para que las
+respuestas estén ancladas al caso.
 """
 from __future__ import annotations
 
@@ -28,15 +33,20 @@ class ConversationalAgent(Agent):
         )
 
     def preguntar(self, bb: Blackboard, mensaje: str, historial: list[dict] | None = None):
-        """Responde una pregunta puntual. Devuelve (respuesta, disponible)."""
-        historial = historial or []
+        """Responde una pregunta sobre el caso. Devuelve (respuesta, disponible)."""
         respuesta, disponible = registry.get("responder_chat")(
-            historial, self.contexto(bb), mensaje,
+            historial or [], self.contexto(bb), mensaje,
         )
         self.say(bb, f"Pregunta: «{mensaje}» -> respondida (LLM disponible: {disponible}).")
         return respuesta, disponible
 
+    def preguntar_libre(self, mensaje: str, historial: list[dict], contexto: str,
+                        system_prompt: str):
+        """Chat libre (sin caso). Devuelve (respuesta, disponible)."""
+        return registry.get("responder_chat")(
+            historial, contexto, mensaje, system_prompt=system_prompt,
+        )
+
     def act(self, bb: Blackboard) -> None:
-        # En el flujo de diagnóstico no actúa solo; se invoca bajo demanda
-        # (modo --ask de la CLI) vía preguntar().
+        # En el flujo de diagnóstico no actúa solo; se invoca bajo demanda.
         return

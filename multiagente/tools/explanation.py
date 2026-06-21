@@ -39,9 +39,12 @@ def explicar_caso(*, foto_path: str, heatmap_path: str, diagnostico_nombre: str,
 
 @registry.register(
     "responder_chat",
-    "Responde una pregunta de seguimiento del agricultor sobre el caso, en "
-    "español, restringida a la salud del cultivo. Devuelve (respuesta, disponible).",
+    "Responde una pregunta de seguimiento del agricultor, en español, restringida "
+    "a la salud del cultivo. Acepta un system_prompt (caso o chat libre). "
+    "Devuelve (respuesta, disponible).",
 )
-def responder_chat(historial: list[dict], contexto_caso: str, mensaje_usuario: str):
+def responder_chat(historial: list[dict], contexto_caso: str, mensaje_usuario: str,
+                   system_prompt: str | None = None):
     from app.services import llm_client
-    return llm_client.chat(historial, contexto_caso, mensaje_usuario)
+    sp = system_prompt or llm_client.CHAT_SYSTEM_PROMPT
+    return llm_client.chat(historial, contexto_caso, mensaje_usuario, system_prompt=sp)

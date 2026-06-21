@@ -43,8 +43,7 @@ class ValidatorAgent(Agent):
         conf = perc.get("confianza", 0.0)
         baja = (perc.get("estado_confianza") == "baja_confianza"
                 or conf < LOW_CONFIDENCE_THRESHOLD)
-        sesgo = bool(perc.get("alerta_sesgo", {}).get("alerta", False)) \
-            if isinstance(perc.get("alerta_sesgo"), dict) else bool(perc.get("alerta_sesgo"))
+        sesgo = bool(perc.get("alerta_sesgo"))
 
         motivos = []
         if baja:

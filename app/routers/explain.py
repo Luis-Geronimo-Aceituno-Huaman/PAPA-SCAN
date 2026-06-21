@@ -14,7 +14,8 @@ from app.database import get_db
 from app.deps import get_current_user
 from app.models import Case, User
 from app.schemas import ExplainResponse, Explicacion
-from app.services import llm_client, rules_engine
+from app.services import rules_engine
+from multiagente import web as ma_web
 
 router = APIRouter(prefix="/api", tags=["explain"])
 
@@ -30,14 +31,18 @@ def explain(case_id: int, db: Session = Depends(get_db),
     rec = json.loads(case.recomendacion_json or "{}")
     rec_texto = rules_engine.recommendation_text(rec)
 
-    explic, disponible = llm_client.explain(
-        foto_path=case.imagen_path,
-        heatmap_path=case.heatmap_path,
+    # El AgenteExplicador (LLM multimodal) + el AgenteValidador (post-control
+    # anti-alucinación) corren sobre el caso ya diagnosticado.
+    explic, disponible = ma_web.explicar(
         diagnostico_nombre=case.diagnostico,
         confianza=case.confianza,
         severidad=case.severidad,
         zona_gradcam=case.zona_gradcam or "la zona resaltada en el mapa de calor",
+        foto_path=case.imagen_path,
+        heatmap_path=case.heatmap_path,
+        recomendacion=rec,
         recomendacion_texto=rec_texto,
+        estado_confianza=case.estado_confianza or "alta",
     )
 
     # Guardar la explicación en el caso.
