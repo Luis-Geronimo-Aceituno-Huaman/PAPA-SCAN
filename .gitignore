@@ -23,7 +23,9 @@ env/
 # ---------------------------------------------------------------------------
 Train_Valid/
 Test/
-data/
+# Solo el dataset de la RAÍZ (con '/' inicial). Sin la barra, este patrón también
+# ignoraba src/data/ —código fuente— y dejaba la app rota al clonar en otra PC.
+/data/
 
 # Estudios de Optuna (solo hacen falta para re-entrenar/analizar HPO)
 artifacts/optuna/*.db
