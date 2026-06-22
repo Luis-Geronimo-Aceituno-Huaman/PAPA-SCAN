@@ -19,7 +19,8 @@ import ollama
 _log = logging.getLogger("papascan.llm")
 
 from app.settings import (
-    LLM_MODEL, LLM_TEMPERATURE, LLM_TIMEOUT_S, LOW_CONFIDENCE_THRESHOLD, OLLAMA_HOST,
+    LLM_MODEL, LLM_NUM_CTX, LLM_TEMPERATURE, LLM_TIMEOUT_S, LOW_CONFIDENCE_THRESHOLD,
+    OLLAMA_HOST,
 )
 
 _SIX_KEYS = ["resumen", "que_observo_el_modelo", "nivel_confianza",
@@ -213,7 +214,7 @@ def explain(*, foto_path: str, heatmap_path: str, diagnostico_nombre: str,
             model=LLM_MODEL,
             messages=[{"role": "user", "content": _interp_prompt(diagnostico_nombre),
                        "images": [foto_path, heatmap_path]}],
-            options={"temperature": LLM_TEMPERATURE},
+            options={"temperature": LLM_TEMPERATURE, "num_ctx": LLM_NUM_CTX},
         )
         interp = _strip_think(resp["message"]["content"])
         if not interp:
@@ -251,7 +252,7 @@ def chat(historial: list[dict], contexto_caso: str, mensaje_usuario: str,
         "salud del cultivo y este diagnóstico.»")})
     def _ask() -> str:
         resp = _client().chat(model=LLM_MODEL, messages=messages,
-                              options={"temperature": LLM_TEMPERATURE})
+                              options={"temperature": LLM_TEMPERATURE, "num_ctx": LLM_NUM_CTX})
         return _strip_think(resp["message"]["content"])
 
     try:

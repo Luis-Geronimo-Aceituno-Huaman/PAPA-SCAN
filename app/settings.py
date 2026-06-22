@@ -43,6 +43,10 @@ OLLAMA_HOST = os.getenv("OLLAMA_HOST", "http://127.0.0.1:11434")
 LLM_MODEL = os.getenv("PAPASCAN_LLM_MODEL", "qwen3-vl:2b")
 LLM_TEMPERATURE = float(os.getenv("PAPASCAN_LLM_TEMPERATURE", "0.2"))
 LLM_TIMEOUT_S = float(os.getenv("PAPASCAN_LLM_TIMEOUT", "120"))
+# Ventana de contexto del LLM. La explicación envía DOS imágenes (foto + heatmap)
+# que se expanden a ~5 k tokens; el default de Ollama (4096) se queda corto y la
+# llamada falla con 400 (exceed_context_size) cayendo al respaldo. 8192 las cubre.
+LLM_NUM_CTX = int(os.getenv("PAPASCAN_LLM_NUM_CTX", "8192"))
 
 # --------------------------------------------------------------------------- #
 # Almacenamiento local de archivos (imágenes, mapas de calor, reportes)
